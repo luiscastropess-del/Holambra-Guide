@@ -7,23 +7,27 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Tenant {
+  id    String @id @default(cuid())
+  name  String
+
+  users  User[]
+  places Place[]
+}
+
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
+  id        String @id @default(cuid())
+  email     String @unique
   password  String
-  createdAt DateTime @default(now())
+
+  tenantId  String
+  tenant    Tenant @relation(fields: [tenantId], references: [id])
 }
 
 model Place {
-  id          String   @id @default(cuid())
-  title       String
-  summary     String
-  description String
-  category    String
-  price       Float
-  address     String
-  lat         Float
-  lng         Float
-  imageUrl    String?
-  createdAt   DateTime @default(now())
+  id        String @id @default(cuid())
+  title     String
+
+  tenantId  String
+  tenant    Tenant @relation(fields: [tenantId], references: [id])
 }
