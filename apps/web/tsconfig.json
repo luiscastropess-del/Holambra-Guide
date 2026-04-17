@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": { "@/*": ["./*"] },
+    "jsx": "preserve",
     "ignoreDeprecations": "6.0"
   }
 }

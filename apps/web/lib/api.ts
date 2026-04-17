@@ -1,19 +1,15 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL!
+const API = process.env.NEXT_PUBLIC_API_URL!
 
-export async function request(path: string, options?: RequestInit) {
-  const res = await fetch(`${API_URL}${path}`, {
-    ...options,
-    headers: { 'Content-Type': 'application/json' },
-    cache: 'no-store'
-  })
-  if (!res.ok) throw new Error('API error')
+export async function getPlaces() {
+  const res = await fetch(`${API}/places`, { cache: 'no-store' })
   return res.json()
 }
 
-export const getPlaces = () => request('/places')
-
-export const createPlace = (data: any) =>
-  request('/places', {
+export async function createPlace(data: any) {
+  const res = await fetch(`${API}/places`, {
     method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
   })
+  return res.json()
+}
